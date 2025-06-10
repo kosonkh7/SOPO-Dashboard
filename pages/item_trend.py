@@ -69,24 +69,64 @@ selected_item = st.sidebar.selectbox("품목 선택", options=category_columns)
 # -------------------------
 filtered_df = df[df["center_name"].isin(selected_centers)]
 
+
 # -------------------------
-# 5. 시각화
+# 5. 시각화 (Plotly)
 # -------------------------
+import plotly.graph_objects as go
+
 st.subheader(f"{selected_item} 일별 추이 (센터별 비교)")
 
 if filtered_df.empty:
     st.warning("해당 조건에 맞는 데이터가 없습니다.")
 else:
-    # 센터별로 날짜별 물동량 추이를 선 그래프로 비교
     pivot_df = filtered_df.pivot_table(index="date", columns="center_name", values=selected_item)
 
-    fig, ax = plt.subplots(figsize=(12, 6))
-    pivot_df.plot(ax=ax, linewidth=2)  # 선 두께를 키워서 더 잘 보이게
-    ax.set_ylabel("물동량")
-    ax.set_xlabel("날짜")
-    ax.set_title(f"{selected_item} 일별 추이")
-    ax.legend(title="센터")
-    ax.grid(True)
-    plt.tight_layout()
+    # Plotly figure 생성
+    fig = go.Figure()
 
-    st.pyplot(fig)
+    # 센터별로 선 추가
+    for center in pivot_df.columns:
+        fig.add_trace(go.Scatter(
+            x=pivot_df.index,
+            y=pivot_df[center],
+            mode='lines+markers',
+            name=center,
+            line=dict(width=2),
+            marker=dict(size=4)
+        ))
+
+    fig.update_layout(
+        title=f"{selected_item} 일별 추이",
+        xaxis_title="날짜",
+        yaxis_title="물동량",
+        hovermode="x unified",
+        template="plotly_white",
+        legend_title="센터"
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
+
+
+# # -------------------------
+# # 5. 시각화 (Matplotlib) 
+# # -------------------------
+# st.subheader(f"{selected_item} 일별 추이 (센터별 비교)")
+
+# if filtered_df.empty:
+#     st.warning("해당 조건에 맞는 데이터가 없습니다.")
+# else:
+#     # 센터별로 날짜별 물동량 추이를 선 그래프로 비교
+#     pivot_df = filtered_df.pivot_table(index="date", columns="center_name", values=selected_item)
+
+#     fig, ax = plt.subplots(figsize=(12, 6))
+#     pivot_df.plot(ax=ax, linewidth=2)  # 선 두께를 키워서 더 잘 보이게
+#     ax.set_ylabel("물동량")
+#     ax.set_xlabel("날짜")
+#     ax.set_title(f"{selected_item} 일별 추이")
+#     ax.legend(title="센터")
+#     ax.grid(True)
+#     plt.tight_layout()
+
+#     st.pyplot(fig)
+
