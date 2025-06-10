@@ -9,6 +9,7 @@ import os
 # src 경로 추가 및 로더 불러오기
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from src.loader import load_logistics_data
+from src.visualizer import bar_chart_by_item
 
 # -------------------------
 # 1. 페이지 설정
@@ -80,21 +81,6 @@ else:
     )
 
     # Plotly barplot
-    fig = px.bar(
-        melted_df,
-        x="center_name",
-        y="물동량",
-        color="품목",
-        barmode="group",
-        text_auto=".2s",
-        title="센터별 품목 물동량 비교"
-    )
-
-    fig.update_layout(
-        xaxis_title="센터명",
-        yaxis_title="물동량",
-        legend_title="품목",
-        template="plotly_white"
-    )
+    fig = bar_chart_by_item(melted_df)
 
     st.plotly_chart(fig, use_container_width=True)

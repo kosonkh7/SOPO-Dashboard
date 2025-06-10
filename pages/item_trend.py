@@ -11,6 +11,7 @@ import os
 # src 경로 추가 및 데이터 로더 import
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from src.loader import load_logistics_data
+from src.visualizer import line_chart_by_center
 
 # -------------------------
 # 0. 한글 폰트 설정 (맑은 고딕)
@@ -83,29 +84,12 @@ else:
     pivot_df = filtered_df.pivot_table(index="date", columns="center_name", values=selected_item)
 
     # Plotly figure 생성
-    fig = go.Figure()
-
-    # 센터별로 선 추가
-    for center in pivot_df.columns:
-        fig.add_trace(go.Scatter(
-            x=pivot_df.index,
-            y=pivot_df[center],
-            mode='lines+markers',
-            name=center,
-            line=dict(width=2),
-            marker=dict(size=4)
-        ))
-
-    fig.update_layout(
-        title=f"{selected_item} 일별 추이",
-        xaxis_title="날짜",
-        yaxis_title="물동량",
-        hovermode="x unified",
-        template="plotly_white",
-        legend_title="센터"
-    )
-
+    fig = line_chart_by_center(pivot_df, selected_item)
+    
     st.plotly_chart(fig, use_container_width=True)
+
+
+
 
 
 # # -------------------------
