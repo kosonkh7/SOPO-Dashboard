@@ -1,6 +1,9 @@
 # 📦 SOPO-Dashboard
 
 ## 생활물류 AI 기반 예측/관리 대시보드
+![image](https://github.com/user-attachments/assets/7f20dc65-ff28-4e67-ade7-89f2d5430658)
+
+
 
 서울시 생활물류 데이터를 기반으로 **MFC 관리자**가 현장 운영에 필요한 인사이트를 직관적으로 확인할 수 있도록 설계된 웹 기반 대시보드 시스템입니다.  
 Streamlit을 활용한 대시보드를 FastAPI 서버를 통해 중계하고, <br>
