@@ -4,11 +4,9 @@
 ![image](https://github.com/user-attachments/assets/7f20dc65-ff28-4e67-ade7-89f2d5430658)
 
 
-
 6년간 집계된 서울시 생활물류 데이터(CJ대한통운 제공)를 기반으로 <br>
 **MFC(Micro Fulfillment Center) 관리자**에게 더욱 효율적으로 데이터 기반 인사이트를 제공하기 위해 설계한 **Streamlit** 기반 대시보드 시스템입니다.  <br> 
 **LightGBM 기반 물동량 예측 및 이상 탐지 기능을** 포함하고 있습니다.
-
 
 
 ## 📅 프로젝트 개요
